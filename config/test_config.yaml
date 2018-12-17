@@ -1,0 +1,18 @@
+# CUDA
+cuda_devices: '0'
+
+# dataset
+dataset:
+  data_root: 'ModelNet40_MeshNet/'
+  augment_data: false
+
+# model
+load_model: 'MeshNet_best_9192.pkl'
+
+# MeshNet
+MeshNet:
+  structural_descriptor:
+    num_kernel: 64
+    sigma: 0.2
+  mesh_convolution:
+    aggregation_method: 'Concat'  # Concat/Max/Average

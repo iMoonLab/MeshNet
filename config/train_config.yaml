@@ -1,0 +1,27 @@
+# CUDA
+cuda_devices: '0'   # multi-gpu training is available
+
+# dataset
+dataset:
+  data_root: 'ModelNet40_MeshNet/'
+  augment_data: true
+
+# result
+ckpt_root: 'ckpt_root/'
+
+# MeshNet
+MeshNet:
+  structural_descriptor:
+    num_kernel: 64
+    sigma: 0.2
+  mesh_convolution:
+    aggregation_method: 'Concat'  # Concat/Max/Average
+
+# train
+lr: 0.01
+momentum: 0.9
+weight_decay: 0.0005
+batch_size: 64
+max_epoch: 150
+milestones: [30, 60]
+gamma: 0.1
