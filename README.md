@@ -33,10 +33,10 @@ Install [PyTorch 0.4.0](https://pytorch.org). You also need to install yaml. The
 
 Firstly, you should download the [reorganized ModelNet40 dataset](https://drive.google.com/open?id=1l8Ij9BODxcD1goePBskPkBcgKW76Ewcs). Then, configure the "data_root" in `config/train_config.yaml` and `config/test_config.yaml` with your path to the downloaded dataset:
 
-```yaml
+```
 # config/train_config.yaml and config/test_config.yaml
 dataset:
-	data_root: [your_path_to_dataset]
+  data_root: [your_path_to_dataset]
 ```
 
 For each data file `XXX.off` in ModelNet, we reorganize it to the format required by MeshNet and store it into `XXX.npz`. The reorganized file includes two parts of data:
@@ -58,7 +58,7 @@ You can modify the configuration in the `config/train_config.yaml` for your own 
 
 The pretrained MeshNet model weights are stored in [pretrained model](https://drive.google.com/open?id=1m5Uy9-oXMNPZ129owKvQ5ipH3f0vdABs). You can download it and configure the "load_model" in `config/test_config.yaml` with your path to the weight file.
 
-```yaml
+```
 # config/test_config.yaml
 load_model: [your_path_to_weight_file]
 ```
