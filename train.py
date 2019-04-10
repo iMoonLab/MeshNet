@@ -10,10 +10,8 @@ from data import ModelNet40
 from models import MeshNet
 from utils import append_feature, calculate_map
 
-
 cfg = get_train_config()
 os.environ['CUDA_VISIBLE_DEVICES'] = cfg['cuda_devices']
-
 
 data_set = {
     x: ModelNet40(cfg=cfg['dataset'], part=x) for x in ['train', 'test']
@@ -25,7 +23,6 @@ data_loader = {
 
 
 def train_model(model, criterion, optimizer, scheduler, cfg):
-
     best_acc = 0.0
     best_map = 0.0
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -96,7 +93,6 @@ def train_model(model, criterion, optimizer, scheduler, cfg):
 
 
 if __name__ == '__main__':
-
     model = MeshNet(cfg=cfg['MeshNet'], require_fea=True)
     model.cuda()
     model = nn.DataParallel(model)

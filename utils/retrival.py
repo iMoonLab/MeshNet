@@ -19,9 +19,9 @@ def append_feature(raw, data, flaten=False):
 
 def Eu_dis_mat_fast(X):
     aa = np.sum(np.multiply(X, X), 1)
-    ab = X*X.T
-    D = aa+aa.T - 2*ab
-    D[D<0] = 0
+    ab = X * X.T
+    D = aa + aa.T - 2 * ab
+    D[D < 0] = 0
     D = np.sqrt(D)
     D = np.maximum(D, D.T)
     return D
@@ -41,8 +41,8 @@ def calculate_map(fts, lbls, dis_mat=None):
         precision = []
         for j in range(top_k):
             if truth[j]:
-                sum+=1
-                precision.append(sum*1.0/(j + 1))
+                sum += 1
+                precision.append(sum * 1.0 / (j + 1))
         if len(precision) == 0:
             ap = 0
         else:
@@ -51,7 +51,7 @@ def calculate_map(fts, lbls, dis_mat=None):
             ap = np.array(precision).mean()
         mAP += ap
         # print(f'{i+1}/{num}\tap:{ap:.3f}\t')
-    mAP = mAP/num
+    mAP = mAP / num
     return mAP
 
 
@@ -71,10 +71,10 @@ def cal_pr(cfg, des_mat, lbls, save=True, draw=False):
         recall = []
         for j in range(top_k):
             if truth[j]:
-                tmp+=1
+                tmp += 1
                 # precision.append(sum/(j + 1))
-            recall.append(tmp*1.0/sum)
-            precision.append(tmp*1.0/(j+1))
+            recall.append(tmp * 1.0 / sum)
+            precision.append(tmp * 1.0 / (j + 1))
         precisions.append(precision)
         for j in range(len(precision)):
             precision[j] = max(precision[j:])
@@ -88,7 +88,7 @@ def cal_pr(cfg, des_mat, lbls, save=True, draw=False):
                     min_des = abs(recall[j] - ii * 0.1)
                     val = precision[j]
             tmp.append(val)
-        print('%d/%d'%(i+1, num))
+        print('%d/%d' % (i + 1, num))
         ans.append(tmp)
     ans = np.array(ans).mean(0)
     if save:
@@ -100,7 +100,8 @@ def cal_pr(cfg, des_mat, lbls, save=True, draw=False):
 
 
 def test():
-    scores = [0.23, 0.76, 0.01, 0.91, 0.13, 0.45, 0.12, 0.03, 0.38, 0.11, 0.03, 0.09, 0.65, 0.07, 0.12, 0.24, 0.1, 0.23, 0.46, 0.08]
+    scores = [0.23, 0.76, 0.01, 0.91, 0.13, 0.45, 0.12, 0.03, 0.38, 0.11, 0.03, 0.09, 0.65, 0.07, 0.12, 0.24, 0.1, 0.23,
+              0.46, 0.08]
     gt_label = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1]
     scores = np.array(scores)
     targets = np.array(gt_label).astype(np.uint8)

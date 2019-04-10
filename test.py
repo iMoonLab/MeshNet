@@ -9,17 +9,14 @@ from data import ModelNet40
 from models import MeshNet
 from utils import append_feature, calculate_map
 
-
 cfg = get_test_config()
 os.environ['CUDA_VISIBLE_DEVICES'] = cfg['cuda_devices']
-
 
 data_set = ModelNet40(cfg=cfg['dataset'], part='test')
 data_loader = data.DataLoader(data_set, batch_size=1, num_workers=4, shuffle=True, pin_memory=False)
 
 
 def test_model(model):
-
     correct_num = 0
     ft_all, lbl_all = None, None
 
@@ -44,7 +41,6 @@ def test_model(model):
 
 
 if __name__ == '__main__':
-
     model = MeshNet(cfg=cfg['MeshNet'], require_fea=True)
     model.cuda()
     model = nn.DataParallel(model)

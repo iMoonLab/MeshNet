@@ -26,7 +26,6 @@ class FaceRotateConvolution(nn.Module):
         )
 
     def forward(self, corners):
-
         fea = (self.rotate_mlp(corners[:, :6]) +
                self.rotate_mlp(corners[:, 3:9]) +
                self.rotate_mlp(torch.cat([corners[:, 6:], corners[:, :3]], 1))) / 3
@@ -46,7 +45,6 @@ class FaceKernelCorrelation(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, normals, neighbor_index):
-
         b, _, n = normals.size()
 
         center = normals.unsqueeze(2).expand(-1, -1, self.num_kernel, -1).unsqueeze(4)
@@ -63,8 +61,8 @@ class FaceKernelCorrelation(nn.Module):
         weight = weight.unsqueeze(3).expand(-1, -1, -1, n, -1)
         weight = weight.unsqueeze(4).expand(-1, -1, -1, -1, 4, -1)
 
-        dist = torch.sum((fea - weight)**2, 1)
-        fea = torch.sum(torch.sum(np.e**(dist / (-2 * self.sigma**2)), 4), 3) / 16
+        dist = torch.sum((fea - weight) ** 2, 1)
+        fea = torch.sum(torch.sum(np.e ** (dist / (-2 * self.sigma ** 2)), 4), 3) / 16
 
         return self.relu(self.bn(fea))
 
