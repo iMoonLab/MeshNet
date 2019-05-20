@@ -5,6 +5,7 @@ cuda_devices: '0'   # multi-gpu training is available
 dataset:
   data_root: 'ModelNet40_MeshNet/'
   augment_data: true
+  max_faces: 1024
 
 # result
 ckpt_root: 'ckpt_root/'

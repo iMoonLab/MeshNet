@@ -44,6 +44,10 @@ For each data file `XXX.off` in ModelNet, we reorganize it to the format require
 * The "face" part contains the center position, vertices' positions and normal vector of each face.
 * The "neighbor_index" part contains the indices of neighbors of each face.
 
+If you wish to create and use your own dataset, simplify your models and organize the `.off` files similar to the ModelNet dataset. 
+Then use the code in `data/preprocess.py` to transform them into the required `.npz` format. 
+Notice that the parameter `max_faces` in config files should be maximum number of faces among all of your simplified mesh models. 
+
 ##### Train Model
 
 To train and evaluate MeshNet for classification and retrieval:

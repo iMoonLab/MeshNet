@@ -20,6 +20,7 @@ class ModelNet40(data.Dataset):
     def __init__(self, cfg, part='train'):
         self.root = cfg['data_root']
         self.augment_data = cfg['augment_data']
+        self.max_faces = cfg['max_faces']
         self.part = part
 
         self.data = []
@@ -42,12 +43,12 @@ class ModelNet40(data.Dataset):
             jittered_data = np.clip(sigma * np.random.randn(*face[:, :12].shape), -1 * clip, clip)
             face = np.concatenate((face[:, :12] + jittered_data, face[:, 12:]), 1)
 
-        # fill for n < 1024
+        # fill for n < max_faces with randomly picked faces
         num_point = len(face)
-        if num_point < 1024:
+        if num_point < self.max_faces:
             fill_face = []
             fill_neighbor_index = []
-            for i in range(1024 - num_point):
+            for i in range(self.max_faces - num_point):
                 index = np.random.randint(0, num_point)
                 fill_face.append(face[index])
                 fill_neighbor_index.append(neighbor_index[index])

@@ -5,6 +5,7 @@ cuda_devices: '0'
 dataset:
   data_root: 'ModelNet40_MeshNet/'
   augment_data: false
+  max_faces: 1024
 
 # model
 load_model: 'MeshNet_best_9192.pkl'
