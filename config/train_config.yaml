@@ -1,14 +1,16 @@
 # CUDA
-cuda_devices: '0'   # multi-gpu training is available
+cuda_devices: '0,1'   # multi-gpu training is available
 
 # dataset
 dataset:
-  data_root: 'ModelNet40_MeshNet/'
+  data_root: 'dataset/ModelNet40_processed'
+  max_faces: 500
   augment_data: true
-  max_faces: 1024
+  jitter_sigma: 0.01
+  jitter_clip: 0.05
 
 # result
-ckpt_root: 'ckpt_root/'
+ckpt_root: 'ckpt_root'
 
 # MeshNet
 MeshNet:
@@ -17,12 +19,20 @@ MeshNet:
     sigma: 0.2
   mesh_convolution:
     aggregation_method: 'Concat'  # Concat/Max/Average
+  mask_ratio: 0.95
+  dropout: 0.5
+  num_classes: 40
 
 # train
-lr: 0.01
+seed: 0
+lr: 0.0006
 momentum: 0.9
 weight_decay: 0.0005
-batch_size: 64
-max_epoch: 150
-milestones: [30, 60]
+batch_size: 128
+max_epoch: 250
+optimizer: 'adamw' # sgd/adamw
+scheduler: 'cos' # step/cos
+milestones: [30, 60, 90]
 gamma: 0.1
+retrieval_on: true   # enable evaluating retrieval performance during training
+save_steps: 10

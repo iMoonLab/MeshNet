@@ -19,12 +19,17 @@ class ModelNet40(data.Dataset):
 
     def __init__(self, cfg, part='train'):
         self.root = cfg['data_root']
-        self.augment_data = cfg['augment_data']
         self.max_faces = cfg['max_faces']
         self.part = part
+        self.augment_data = cfg['augment_data']
+        if self.augment_data:
+            self.jitter_sigma = cfg['jitter_sigma']
+            self.jitter_clip = cfg['jitter_clip']
 
         self.data = []
         for type in os.listdir(self.root):
+            if type not in type_to_index_map.keys():
+                continue
             type_index = type_to_index_map[type]
             type_root = os.path.join(os.path.join(self.root, type), part)
             for filename in os.listdir(type_root):
@@ -34,14 +39,14 @@ class ModelNet40(data.Dataset):
     def __getitem__(self, i):
         path, type = self.data[i]
         data = np.load(path)
-        face = data['face']
-        neighbor_index = data['neighbor_index']
+        face = data['faces']
+        neighbor_index = data['neighbors']
 
         # data augmentation
         if self.augment_data and self.part == 'train':
-            sigma, clip = 0.01, 0.05
-            jittered_data = np.clip(sigma * np.random.randn(*face[:, :12].shape), -1 * clip, clip)
-            face = np.concatenate((face[:, :12] + jittered_data, face[:, 12:]), 1)
+            # jitter
+            jittered_data = np.clip(self.jitter_sigma * np.random.randn(*face[:, :3].shape), -1 * self.jitter_clip, self.jitter_clip)
+            face = np.concatenate((face[:, :3] + jittered_data, face[:, 3:]), 1)
 
         # fill for n < max_faces with randomly picked faces
         num_point = len(face)

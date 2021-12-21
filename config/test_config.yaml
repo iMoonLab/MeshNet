@@ -3,12 +3,12 @@ cuda_devices: '0'
 
 # dataset
 dataset:
-  data_root: 'ModelNet40_MeshNet/'
+  data_root: 'dataset/ModelNet40_processed'
   augment_data: false
-  max_faces: 1024
+  max_faces: 500
 
 # model
-load_model: 'MeshNet_best_9192.pkl'
+load_model: 'MeshNet_ModelNet40_250e_bs128_lr6e-4.pkl'
 
 # MeshNet
 MeshNet:
@@ -17,3 +17,10 @@ MeshNet:
     sigma: 0.2
   mesh_convolution:
     aggregation_method: 'Concat'  # Concat/Max/Average
+  mask_ratio: 0.95
+  dropout: 0.5
+  num_classes: 40
+
+# test config
+batch_size: 128
+retrieval_on: true
