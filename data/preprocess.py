@@ -14,7 +14,6 @@ def find_neighbor(faces, faces_contain_this_vertex, vf1, vf2, except_face):
 
     return except_face
 
-
 if __name__ == '__main__':
     root = Path('dataset/Manifold40')
     new_root = Path('dataset/ModelNet40_processed')
