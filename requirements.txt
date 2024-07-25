@@ -1,4 +1,4 @@
-torch==1.8.0
+torch==2.2.0
 PyYAML==6.0
 pymeshlab==2021.10
 rich==10.16.1
